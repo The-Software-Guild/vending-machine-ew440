@@ -11,6 +11,7 @@ import com.mthree.c130.ui.ItemsView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ItemsController {
 
@@ -67,7 +68,10 @@ public class ItemsController {
 
     private void listItems() throws ItemFilePersistenceException {
         List<Item> ItemList = service.getAllItems();
-        view.displayItems(ItemList);
+        List<Item> filtered = ItemList.stream()
+                .filter(b -> b.getQuantity() > 0)
+                .collect(Collectors.toList());
+        view.displayItems(filtered);
     }
 
     private void unknownCommand() {
